@@ -25,15 +25,8 @@
   - [x] データベース破損時のフェイルセーフ処理（DB削除と再生成、デフォルト値の適用）を実装。
 
 ### STEP 2: UIの構築 (MainWindow.xaml)
-- [ ] ウィンドウをリサイズ不可 (`ResizeMode="NoResize"`) に設定。
-- [ ] 上部: `TextBlock` ("Search") と `TextBox` (`SearchKeyword`) を配置。
-- [ ] 中部: `DataGrid` を配置し、`No`, `Templates`, `Last Date` 列を定義。複数選択可能に設定。
-- [ ] 中部ボタン: `Add`, `Remove` ボタンを配置。
-- [ ] 下部:
-  - [ ] `Date` と `Time` の `CheckBox` を配置。
-  - [ ] 展開先ルートフォルダ用 `TextBox` と `Select` ボタンを配置。
-  - [ ] ワークスペース名用 `TextBox` を配置。
-  - [ ] 右下に `Create` ボタンを配置。
+- [x] 既存の `MainWindow.xaml` をそのまま利用（配置変更・UI追加は行わない）。
+  - ※ただし、ViewModelと連携するための `Binding` プロパティのみ追記を行う。
 
 ### STEP 3: ViewModel の実装 (MainViewModel.cs)
 - [ ] INotifyPropertyChanged を実装し、各UIコントロール用のプロパティをバインディングする。
