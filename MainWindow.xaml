@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsWorkspaceManager"
         mc:Ignorable="d"
-        Title="Workspace Manager" Height="451" Width="413" ResizeMode="NoResize">
+        Title="Workspace Manager" Height="483" Width="421" ResizeMode="NoResize">
     <Grid Margin="10,10,10,10">
-        <Button x:Name="Button_TemplateFolderAdd" Content="Add" Margin="78,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding AddCommand}"/>
+        <Button x:Name="Button_TemplateFolderAdd" Content="Add" Margin="178,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding AddCommand}"/>
         <DataGrid x:Name="DataGrid_RegisteredTemplateFolder" ItemsSource="{Binding FilteredTemplates}" SelectedItem="{Binding SelectedTemplate}" Margin="15,44,0,0" HorizontalAlignment="Left" Width="359" Height="192" VerticalAlignment="Top" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Extended">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="No" Binding="{Binding No}" IsReadOnly="True"/>
@@ -16,7 +16,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="Button_TemplateFolderRemove" Content="Remove" Margin="292,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItems, ElementName=DataGrid_RegisteredTemplateFolder}"/>
-        <Button x:Name="Button_TemplateFolderEdit" Content="Edit" Margin="187,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left"/>
         <TextBox x:Name="TextBox_TargetFolderToCreate" HorizontalAlignment="Left" Margin="15,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Text="{Binding TargetFolder, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="Button_TemplateFolderCreate" Content="Create" Margin="292,389,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding CreateCommand}"/>
         <TextBox x:Name="TextBox_WorkspaceName" HorizontalAlignment="Left" Margin="15,355,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Text="{Binding WorkspaceName, UpdateSourceTrigger=PropertyChanged}"/>

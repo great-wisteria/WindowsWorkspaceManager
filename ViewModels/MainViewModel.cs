@@ -83,7 +83,7 @@ namespace WindowsWorkspaceManager.ViewModels
             get => _targetFolder;
             set
             {
-                string sanitized = RemoveInvalidChars(value);
+                string sanitized = RemoveInvalidPathChars(value);
                 SetProperty(ref _targetFolder, sanitized);
             }
         }
@@ -233,6 +233,11 @@ namespace WindowsWorkspaceManager.ViewModels
         public void LoadConfig()
         {
             TargetFolder = _dbService.GetAppConfig("MainWindow", "TargetFolder") ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(TargetFolder))
+            {
+                TargetFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+
             WorkspaceName = _dbService.GetAppConfig("MainWindow", "WorkspaceName") ?? string.Empty;
             IsDateChecked = bool.TryParse(_dbService.GetAppConfig("MainWindow", "IsDateChecked"), out bool d) && d;
             IsTimeChecked = bool.TryParse(_dbService.GetAppConfig("MainWindow", "IsTimeChecked"), out bool t) && t;
@@ -290,7 +295,7 @@ namespace WindowsWorkspaceManager.ViewModels
 
         /// <summary>
         /// 機能概要
-        /// 入力文字列からWindowsのパスとして使用できない禁則文字を削除して返す
+        /// ワークスペース名からファイル名として使用できない禁則文字を削除して返す
         /// 来歴
         /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
         /// </summary>
@@ -300,8 +305,24 @@ namespace WindowsWorkspaceManager.ViewModels
         {
             if (string.IsNullOrEmpty(input)) return input;
             // 禁則文字: \ / : * ? " < > |
-            string invalidChars = Regex.Escape(new string(Path.GetInvalidPathChars()) + new string(Path.GetInvalidFileNameChars()));
+            string invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
             string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+            return Regex.Replace(input, invalidRegStr, "");
+        }
+
+        /// <summary>
+        /// 機能概要
+        /// パスとして使用できない禁則文字（制御文字など）を削除して返す。コロン(:)や円記号(\)は許容する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="input">対象の文字列</param>
+        /// <returns>禁則文字が削除された文字列</returns>
+        private string RemoveInvalidPathChars(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+            string invalidChars = Regex.Escape(new string(Path.GetInvalidPathChars()));
+            string invalidRegStr = string.Format(@"([{0}]+)", invalidChars);
             return Regex.Replace(input, invalidRegStr, "");
         }
 
