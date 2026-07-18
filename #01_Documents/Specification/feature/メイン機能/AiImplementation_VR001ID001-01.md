@@ -15,14 +15,14 @@
 ## 3. 実装ステップとチェックリスト
 
 ### STEP 1: データモデルとデータベースの準備
-- [ ] `WorkspaceTemplate.cs` を作成し、`TemplateName`, `TemplatePath`, `LastCreatedDate` を定義する。
-- [ ] `AppConfig.cs` を作成し、`ScreenName`, `SettingKey`, `SettingValue` を定義する。
-- [ ] `DatabaseService.cs` を実装する。
-  - [ ] NuGetで `Microsoft.Data.Sqlite` などを導入する。
-  - [ ] データベースファイルの作成と初期化処理を実装。
+- [x] `WorkspaceTemplate.cs` を作成し、`TemplateName`, `TemplatePath`, `LastCreatedDate` を定義する。
+- [x] `AppConfig.cs` を作成し、`ScreenName`, `SettingKey`, `SettingValue` を定義する。
+- [x] `DatabaseService.cs` を実装する。
+  - [x] NuGetで `Microsoft.Data.Sqlite` などを導入する。
+  - [x] データベースファイルの作成と初期化処理を実装。
     - ※保存先パスは、実行ファイルと同一階層（`AppDomain.CurrentDomain.BaseDirectory` 等）の `TemplateManager.sqlite` とし、ポータブル運用（ライト版）を可能とする。
-  - [ ] `WorkspaceTemplates` テーブルと `AppConfig` テーブルの CREATE 処理を実装。
-  - [ ] データベース破損時のフェイルセーフ処理（DB削除と再生成、デフォルト値の適用）を実装。
+  - [x] `WorkspaceTemplates` テーブルと `AppConfig` テーブルの CREATE 処理を実装。
+  - [x] データベース破損時のフェイルセーフ処理（DB削除と再生成、デフォルト値の適用）を実装。
 
 ### STEP 2: UIの構築 (MainWindow.xaml)
 - [ ] ウィンドウをリサイズ不可 (`ResizeMode="NoResize"`) に設定。
