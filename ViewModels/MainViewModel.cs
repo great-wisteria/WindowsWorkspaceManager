@@ -185,7 +185,7 @@ namespace WindowsWorkspaceManager.ViewModels
 
             try
             {
-                _workspaceService.ExtractTemplate(
+                string createdFolderPath = _workspaceService.ExtractTemplate(
                     SelectedTemplate.TemplatePath,
                     TargetFolder,
                     WorkspaceName,
@@ -198,6 +198,12 @@ namespace WindowsWorkspaceManager.ViewModels
                 
                 MessageBox.Show("ワークスペースの作成が完了しました。", "完了", MessageBoxButton.OK, MessageBoxImage.Information);
                 
+                // エクスプローラで作成したフォルダを開く
+                if (Directory.Exists(createdFolderPath))
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", createdFolderPath);
+                }
+
                 LoadTemplates();
             }
             catch (Exception ex)

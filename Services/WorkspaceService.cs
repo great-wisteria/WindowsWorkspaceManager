@@ -24,7 +24,8 @@ namespace WindowsWorkspaceManager.Services
         /// <param name="workspaceName">作成するワークスペース名（フォルダ名）</param>
         /// <param name="isDateChecked">日付（yyyymmdd）をプレフィックスに付与するか</param>
         /// <param name="isTimeChecked">時間（hhmmss）をプレフィックスに付与するか</param>
-        public void ExtractTemplate(string zipPath, string destinationRoot, string workspaceName, bool isDateChecked, bool isTimeChecked)
+        /// <returns>作成された最終的な展開先フォルダの絶対パス</returns>
+        public string ExtractTemplate(string zipPath, string destinationRoot, string workspaceName, bool isDateChecked, bool isTimeChecked)
         {
             // エラーチェック 1: 有効なフォルダか
             if (string.IsNullOrWhiteSpace(destinationRoot) || !Directory.Exists(destinationRoot))
@@ -132,6 +133,8 @@ namespace WindowsWorkspaceManager.Services
                 // 細かいエラーはひとまとめにしてしまう
                 throw new Exception("ファイルアクセスエラー");
             }
+
+            return finalDestinationPath;
         }
     }
 }
