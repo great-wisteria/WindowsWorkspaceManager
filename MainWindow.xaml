@@ -15,7 +15,7 @@
                 <DataGridTextColumn Header="Last Date" Binding="{Binding LastCreatedDate}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Button_TemplateFolderRemove" Content="Remove" Margin="292,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding RemoveCommand}"/>
+        <Button x:Name="Button_TemplateFolderRemove" Content="Remove" Margin="292,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItems, ElementName=DataGrid_RegisteredTemplateFolder}"/>
         <Button x:Name="Button_TemplateFolderEdit" Content="Edit" Margin="187,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left"/>
         <TextBox x:Name="TextBox_TargetFolderToCreate" HorizontalAlignment="Left" Margin="15,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Text="{Binding TargetFolder, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="Button_TemplateFolderCreate" Content="Create" Margin="292,389,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding CreateCommand}"/>

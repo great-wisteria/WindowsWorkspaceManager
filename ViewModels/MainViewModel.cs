@@ -6,9 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
 using WindowsWorkspaceManager.Models;
 using WindowsWorkspaceManager.Services;
+
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace WindowsWorkspaceManager.ViewModels
 {
@@ -21,11 +26,13 @@ namespace WindowsWorkspaceManager.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly DatabaseService _dbService;
+        private readonly WorkspaceService _workspaceService;
         private List<WorkspaceTemplate> _allTemplates = new List<WorkspaceTemplate>();
 
         public MainViewModel()
         {
             _dbService = new DatabaseService();
+            _workspaceService = new WorkspaceService();
             _dbService.InitializeDatabase();
 
             FilteredTemplates = new ObservableCollection<TemplateItemViewModel>();
@@ -120,33 +127,97 @@ namespace WindowsWorkspaceManager.ViewModels
 
         private void ExecuteAdd(object? parameter)
         {
-            // TODO: STEP 4 で実装
+            var dialog = new OpenFileDialog
+            {
+                Filter = "ZIP Files (*.zip)|*.zip|All Files (*.*)|*.*",
+                Title = "テンプレートZIPファイルを選択してください"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                string zipPath = dialog.FileName;
+                string templateName = Path.GetFileNameWithoutExtension(zipPath);
+
+                if (_dbService.IsTemplateExists(templateName, zipPath))
+                {
+                    MessageBox.Show("同一のテンプレートフォルダ名が登録されています。名前を変更して登録するか登録済みのテンプレートフォルダを削除して再度登録してください", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                _dbService.AddTemplate(new WorkspaceTemplate
+                {
+                    TemplateName = templateName,
+                    TemplatePath = zipPath
+                });
+
+                LoadTemplates();
+            }
         }
 
         private bool CanExecuteRemove(object? parameter)
         {
+            // parameterにSelectedItemsが渡ってくる場合があるが、とりあえずSelectedTemplateがあればOKとする
             return SelectedTemplate != null;
         }
 
         private void ExecuteRemove(object? parameter)
         {
-            // TODO: STEP 4 で実装
+            var selectedItems = parameter as System.Collections.IList;
+            if (selectedItems == null || selectedItems.Count == 0) return;
+
+            var result = MessageBox.Show("登録を解除しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                var templateNames = selectedItems.Cast<TemplateItemViewModel>().Select(x => x.TemplateName).ToList();
+                _dbService.RemoveTemplates(templateNames);
+                LoadTemplates();
+            }
         }
 
         private bool CanExecuteCreate(object? parameter)
         {
-            // WorkspaceNameが入力されており、かつ1つのテンプレートが選択されていること
             return !string.IsNullOrWhiteSpace(WorkspaceName) && SelectedTemplate != null;
         }
 
         private void ExecuteCreate(object? parameter)
         {
-            // TODO: STEP 4 で実装
+            if (SelectedTemplate == null) return;
+
+            try
+            {
+                _workspaceService.ExtractTemplate(
+                    SelectedTemplate.TemplatePath,
+                    TargetFolder,
+                    WorkspaceName,
+                    IsDateChecked,
+                    IsTimeChecked
+                );
+
+                string now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                _dbService.UpdateLastCreatedDate(SelectedTemplate.TemplateName, now);
+                
+                MessageBox.Show("ワークスペースの作成が完了しました。", "完了", MessageBoxButton.OK, MessageBoxImage.Information);
+                
+                LoadTemplates();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ExecuteSelectFolder(object? parameter)
         {
-            // TODO: STEP 4 で実装
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                dialog.Description = "展開先のルートフォルダを選択してください";
+                dialog.ShowNewFolderButton = true;
+                
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    TargetFolder = dialog.SelectedPath;
+                }
+            }
         }
 
         #endregion
