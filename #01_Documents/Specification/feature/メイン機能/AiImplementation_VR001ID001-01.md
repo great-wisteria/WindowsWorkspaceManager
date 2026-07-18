@@ -1,0 +1,77 @@
+# AI実装計画書: VR001ID001-01 作業フォルダ（テンプレート）の管理および展開機能
+
+## 1. 実装の目的
+`メイン機能/README.md` および `データベース仕様/README.md` の仕様に基づき、ZIP化されたテンプレートの管理・展開を行うWindows WPFアプリケーション（C# .NET）を実装する。データの永続化には SQLite を使用する。
+
+## 2. 影響範囲・対象ファイル
+- `WindowsWorkspaceManager/MainWindow.xaml` (UI定義)
+- `WindowsWorkspaceManager/MainWindow.xaml.cs` (UIビハインド)
+- `WindowsWorkspaceManager/ViewModels/MainViewModel.cs` (ビューモデル、画面のロジックとバインディング)
+- `WindowsWorkspaceManager/Models/WorkspaceTemplate.cs` (テンプレートモデル)
+- `WindowsWorkspaceManager/Models/AppConfig.cs` (設定モデル)
+- `WindowsWorkspaceManager/Services/DatabaseService.cs` (SQLiteデータベース接続・管理)
+- `WindowsWorkspaceManager/Services/WorkspaceService.cs` (ZIP解凍およびファイル操作)
+
+## 3. 実装ステップとチェックリスト
+
+### STEP 1: データモデルとデータベースの準備
+- [ ] `WorkspaceTemplate.cs` を作成し、`TemplateName`, `TemplatePath`, `LastCreatedDate` を定義する。
+- [ ] `AppConfig.cs` を作成し、`ScreenName`, `SettingKey`, `SettingValue` を定義する。
+- [ ] `DatabaseService.cs` を実装する。
+  - [ ] NuGetで `Microsoft.Data.Sqlite` などを導入する。
+  - [ ] データベースファイル（例: `TemplateManager.sqlite`）の作成と初期化処理を実装。
+  - [ ] `WorkspaceTemplates` テーブルと `AppConfig` テーブルの CREATE 処理を実装。
+  - [ ] データベース破損時のフェイルセーフ処理（DB削除と再生成、デフォルト値の適用）を実装。
+
+### STEP 2: UIの構築 (MainWindow.xaml)
+- [ ] ウィンドウをリサイズ不可 (`ResizeMode="NoResize"`) に設定。
+- [ ] 上部: `TextBlock` ("Search") と `TextBox` (`SearchKeyword`) を配置。
+- [ ] 中部: `DataGrid` を配置し、`No`, `Templates`, `Last Date` 列を定義。複数選択可能に設定。
+- [ ] 中部ボタン: `Add`, `Remove` ボタンを配置。
+- [ ] 下部:
+  - [ ] `Date` と `Time` の `CheckBox` を配置。
+  - [ ] 展開先ルートフォルダ用 `TextBox` と `Select` ボタンを配置。
+  - [ ] ワークスペース名用 `TextBox` を配置。
+  - [ ] 右下に `Create` ボタンを配置。
+
+### STEP 3: ViewModel の実装 (MainViewModel.cs)
+- [ ] INotifyPropertyChanged を実装し、各UIコントロール用のプロパティをバインディングする。
+- [ ] **起動・終了処理**: 起動時にDBからAppConfig設定を読み込み、終了時に設定を保存する処理。
+- [ ] **検索機能**: Searchテキストボックスの変更検知でDataGridを部分一致フィルタリング。絞り込み・追加・削除時にNo列を1から再採番するロジック（ソート時は行わない）。
+- [ ] **入力制限処理**: テキストボックス（パス、ワークスペース名）に対し、禁則文字（`\ / : * ? " < > |`）を受け付けない処理。
+- [ ] **ボタン活性/非活性制御**:
+  - [ ] `Create`ボタン: DataGridで1つだけ選択中、かつワークスペース名が入力されている時のみ活性化。
+  - [ ] `Remove`ボタン: DataGridで選択されているアイテムがある時のみ活性化。
+
+### STEP 4: コマンドとサービスロジックの実装
+- [ ] **Add（追加）処理**:
+  - [ ] ZIPファイルを選択。
+  - [ ] 同名のテンプレート、または同一のZIPパスが既に登録されている場合はエラーダイアログを表示（メッセージ: 「同一のテンプレートフォルダ名が登録されています。名前を変更して登録するか登録済みのテンプレートフォルダを削除して再度登録してください」）。
+  - [ ] 問題なければDBに登録し、一覧を更新。
+- [ ] **Remove（削除）処理**:
+  - [ ] 複数選択対応。
+  - [ ] 削除前に確認ダイアログ（「登録を解除しますか？」）を表示。
+  - [ ] DBからのみ削除（実ファイルは削除しない）。
+- [ ] **Create（作成・展開）処理**:
+  - [ ] エラーチェック: ルートフォルダ空欄/無効、空き容量不足、パス長オーバー、書き込み権限等の確認。
+  - [ ] プレフィックスの結合（`yyyymmdd_hhmmss_` の順序を厳守）。
+  - [ ] 出力先パスが既に存在する場合、空フォルダなら続行、空でなければエラーダイアログ。
+  - [ ] `WorkspaceService` を呼び出し、ZIPを展開。
+  - [ ] ZIP展開時、トップレベルのフォルダ名がZIPファイル名と同じ場合は、そのフォルダを取り除いて中身だけを展開する。
+  - [ ] 展開完了後、DBのLastCreatedDateを現在日付に更新し、完了通知を表示。
+
+## 4. エラーメッセージ定義要件
+実装コード内に以下のエラーメッセージ（またはそれに準ずる定数）を定義し、条件に応じて正確に表示すること。
+- 「同一のテンプレートフォルダ名が登録されています。名前を変更して登録するか登録済みのテンプレートフォルダを削除して再度登録してください」
+- 「ファイルアクセスエラー」
+- 「有効なフォルダが指定されていません」
+- 「作成先のフォルダがすでに存在しています」
+- 「登録済みのテンプレートファイルが移動または削除されています」
+- 「書き込み権限がありません」
+- 「ディスクの空き容量が足りません」
+- 「フォルダーパスが長すぎるため作業フォルダの作成に失敗しました」
+- 「設定の保存に失敗しました」
+
+## 5. 注意事項・AIエージェントへの指示
+- 実装を開始する前に、必ず本計画書と `メイン機能/README.md`, `データベース仕様/README.md` を読み込み、矛盾のないようにコードを生成すること。
+- コードの追加や修正を行う際は、対象ファイルの構造や依存関係を十分に確認しながら実施すること。
