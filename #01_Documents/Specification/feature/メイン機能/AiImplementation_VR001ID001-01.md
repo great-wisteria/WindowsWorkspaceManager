@@ -19,7 +19,8 @@
 - [ ] `AppConfig.cs` を作成し、`ScreenName`, `SettingKey`, `SettingValue` を定義する。
 - [ ] `DatabaseService.cs` を実装する。
   - [ ] NuGetで `Microsoft.Data.Sqlite` などを導入する。
-  - [ ] データベースファイル（例: `TemplateManager.sqlite`）の作成と初期化処理を実装。
+  - [ ] データベースファイルの作成と初期化処理を実装。
+    - ※保存先パスは、実行ファイルと同一階層（`AppDomain.CurrentDomain.BaseDirectory` 等）の `TemplateManager.sqlite` とし、ポータブル運用（ライト版）を可能とする。
   - [ ] `WorkspaceTemplates` テーブルと `AppConfig` テーブルの CREATE 処理を実装。
   - [ ] データベース破損時のフェイルセーフ処理（DB削除と再生成、デフォルト値の適用）を実装。
 

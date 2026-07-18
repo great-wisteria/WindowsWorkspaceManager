@@ -36,3 +36,6 @@ obj/
 # OS Metadata
 .DS_Store
 Thumbs.db
+
+# Directory
+\#99_Temporary/
