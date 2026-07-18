@@ -10,9 +10,36 @@ namespace WindowsWorkspaceManager.ViewModels
     /// </summary>
     public class TemplateItemViewModel
     {
+        /// <summary>
+        /// 機能概要
+        /// 一覧表示時の連番（ソート後も固定）
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public int No { get; set; }
+
+        /// <summary>
+        /// 機能概要
+        /// 登録されているテンプレート名
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public string TemplateName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 機能概要
+        /// 参照元となるZIPファイルのパス
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public string TemplatePath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 機能概要
+        /// 最後にこのテンプレートからワークスペースを作成した日時
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public string? LastCreatedDate { get; set; }
 
         /// <summary>

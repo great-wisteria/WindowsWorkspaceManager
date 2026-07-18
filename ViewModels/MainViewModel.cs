@@ -29,6 +29,12 @@ namespace WindowsWorkspaceManager.ViewModels
         private readonly WorkspaceService _workspaceService;
         private List<WorkspaceTemplate> _allTemplates = new List<WorkspaceTemplate>();
 
+        /// <summary>
+        /// 機能概要
+        /// コンストラクタ。サービスの初期化、コマンドの設定、データの読み込みを行う。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public MainViewModel()
         {
             _dbService = new DatabaseService();
@@ -49,6 +55,12 @@ namespace WindowsWorkspaceManager.ViewModels
         #region Properties
 
         private string _searchKeyword = string.Empty;
+        /// <summary>
+        /// 機能概要
+        /// 検索キーワード
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public string SearchKeyword
         {
             get => _searchKeyword;
@@ -61,9 +73,21 @@ namespace WindowsWorkspaceManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// 機能概要
+        /// 画面に表示するテンプレートのリスト（検索による絞り込み結果）
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public ObservableCollection<TemplateItemViewModel> FilteredTemplates { get; }
 
         private TemplateItemViewModel? _selectedTemplate;
+        /// <summary>
+        /// 機能概要
+        /// DataGrid上で選択されているテンプレート
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public TemplateItemViewModel? SelectedTemplate
         {
             get => _selectedTemplate;
@@ -78,6 +102,12 @@ namespace WindowsWorkspaceManager.ViewModels
         }
 
         private string _targetFolder = string.Empty;
+        /// <summary>
+        /// 機能概要
+        /// 展開先のルートフォルダパス
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public string TargetFolder
         {
             get => _targetFolder;
@@ -89,6 +119,12 @@ namespace WindowsWorkspaceManager.ViewModels
         }
 
         private string _workspaceName = string.Empty;
+        /// <summary>
+        /// 機能概要
+        /// 作成するワークスペース（フォルダ）名
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public string WorkspaceName
         {
             get => _workspaceName;
@@ -103,6 +139,12 @@ namespace WindowsWorkspaceManager.ViewModels
         }
 
         private bool _isDateChecked;
+        /// <summary>
+        /// 機能概要
+        /// 日付(yyyymmdd)をプレフィックスに付与するかのチェック状態
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public bool IsDateChecked
         {
             get => _isDateChecked;
@@ -110,6 +152,12 @@ namespace WindowsWorkspaceManager.ViewModels
         }
 
         private bool _isTimeChecked;
+        /// <summary>
+        /// 機能概要
+        /// 時間(hhmmss)をプレフィックスに付与するかのチェック状態
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public bool IsTimeChecked
         {
             get => _isTimeChecked;
@@ -120,11 +168,45 @@ namespace WindowsWorkspaceManager.ViewModels
 
         #region Commands
 
+        /// <summary>
+        /// 機能概要
+        /// 新規テンプレート追加コマンド
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public ICommand AddCommand { get; }
+
+        /// <summary>
+        /// 機能概要
+        /// 選択テンプレート削除コマンド
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public ICommand RemoveCommand { get; }
+
+        /// <summary>
+        /// 機能概要
+        /// ワークスペース作成コマンド
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public ICommand CreateCommand { get; }
+
+        /// <summary>
+        /// 機能概要
+        /// 展開先フォルダ選択コマンド
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
         public ICommand SelectFolderCommand { get; }
 
+        /// <summary>
+        /// 機能概要
+        /// Addボタン押下時のコマンド実行処理。ZIPファイルを選択し、テンプレートとして登録する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="parameter">コマンドパラメータ（未使用）</param>
         private void ExecuteAdd(object? parameter)
         {
             var dialog = new OpenFileDialog
@@ -154,12 +236,27 @@ namespace WindowsWorkspaceManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// 機能概要
+        /// Removeボタンが実行可能かどうかを判定する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="parameter">コマンドパラメータ</param>
+        /// <returns>実行可能な場合は true</returns>
         private bool CanExecuteRemove(object? parameter)
         {
             // parameterにSelectedItemsが渡ってくる場合があるが、とりあえずSelectedTemplateがあればOKとする
             return SelectedTemplate != null;
         }
 
+        /// <summary>
+        /// 機能概要
+        /// Removeボタン押下時のコマンド実行処理。選択されたテンプレートを削除する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="parameter">DataGridのSelectedItemsリスト</param>
         private void ExecuteRemove(object? parameter)
         {
             var selectedItems = parameter as System.Collections.IList;
@@ -174,11 +271,26 @@ namespace WindowsWorkspaceManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// 機能概要
+        /// Createボタンが実行可能かどうかを判定する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="parameter">コマンドパラメータ</param>
+        /// <returns>実行可能な場合は true</returns>
         private bool CanExecuteCreate(object? parameter)
         {
             return !string.IsNullOrWhiteSpace(WorkspaceName) && SelectedTemplate != null;
         }
 
+        /// <summary>
+        /// 機能概要
+        /// Createボタン押下時のコマンド実行処理。選択されたテンプレートを展開先に作成する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="parameter">コマンドパラメータ（未使用）</param>
         private void ExecuteCreate(object? parameter)
         {
             if (SelectedTemplate == null) return;
@@ -212,6 +324,13 @@ namespace WindowsWorkspaceManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// 機能概要
+        /// Selectボタン押下時のコマンド実行処理。フォルダ選択ダイアログを表示して展開先ルートフォルダを指定する。
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="parameter">コマンドパラメータ（未使用）</param>
         private void ExecuteSelectFolder(object? parameter)
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
@@ -238,15 +357,19 @@ namespace WindowsWorkspaceManager.ViewModels
         /// </summary>
         public void LoadConfig()
         {
-            TargetFolder = _dbService.GetAppConfig("MainWindow", "TargetFolder") ?? string.Empty;
+            TargetFolder = _dbService.GetAppConfig("MainWindow", "TargetFolder") ?? AppConfigDefaults.DefaultTargetFolder;
             if (string.IsNullOrWhiteSpace(TargetFolder))
             {
-                TargetFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                TargetFolder = AppConfigDefaults.DefaultTargetFolder;
             }
 
-            WorkspaceName = _dbService.GetAppConfig("MainWindow", "WorkspaceName") ?? string.Empty;
-            IsDateChecked = bool.TryParse(_dbService.GetAppConfig("MainWindow", "IsDateChecked"), out bool d) && d;
-            IsTimeChecked = bool.TryParse(_dbService.GetAppConfig("MainWindow", "IsTimeChecked"), out bool t) && t;
+            WorkspaceName = _dbService.GetAppConfig("MainWindow", "WorkspaceName") ?? AppConfigDefaults.DefaultWorkspaceName;
+            
+            string? dateStr = _dbService.GetAppConfig("MainWindow", "IsDateChecked");
+            IsDateChecked = dateStr != null && bool.TryParse(dateStr, out bool d) ? d : AppConfigDefaults.DefaultIsDateChecked;
+
+            string? timeStr = _dbService.GetAppConfig("MainWindow", "IsTimeChecked");
+            IsTimeChecked = timeStr != null && bool.TryParse(timeStr, out bool t) ? t : AppConfigDefaults.DefaultIsTimeChecked;
         }
 
         /// <summary>
@@ -345,8 +468,22 @@ namespace WindowsWorkspaceManager.ViewModels
 
         #region INotifyPropertyChanged
 
+        /// <summary>
+        /// プロパティ変更通知イベント
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// 機能概要
+        /// プロパティの値を設定し、変更があった場合に通知イベントを発行する
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <typeparam name="T">プロパティの型</typeparam>
+        /// <param name="storage">フィールドの参照</param>
+        /// <param name="value">設定する値</param>
+        /// <param name="propertyName">プロパティ名（自動取得）</param>
+        /// <returns>値が変更された場合は true</returns>
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null)
         {
             if (Equals(storage, value))
@@ -359,6 +496,13 @@ namespace WindowsWorkspaceManager.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// 機能概要
+        /// プロパティ変更通知イベントを発行する
+        /// 来歴
+        /// - [VR001ID001-01] 作業フォルダ（テンプレート）の管理および展開機能
+        /// </summary>
+        /// <param name="propertyName">変更されたプロパティ名</param>
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -24,9 +24,10 @@
   - [x] `WorkspaceTemplates` テーブルと `AppConfig` テーブルの CREATE 処理を実装。
   - [x] データベース破損時のフェイルセーフ処理（DB削除と再生成、デフォルト値の適用）を実装。
 
-### STEP 2: UIの構築 (MainWindow.xaml)
+### STEP 2: MainWindow.xaml へのバインディング追記とUI調整
 - [x] 既存の `MainWindow.xaml` をそのまま利用（配置変更・UI追加は行わない）。
   - ※ただし、ViewModelと連携するための `Binding` プロパティのみ追記を行う。
+- [x] 全ての `TextBox` に対して `TextWrapping="Wrap"` 属性を削除し、文字数超過時に下に伸びない（単一行）ように修正する。
 
 ### STEP 3: ViewModel の実装 (MainViewModel.cs)
 - [x] INotifyPropertyChanged を実装し、各UIコントロール用のプロパティをバインディングする。

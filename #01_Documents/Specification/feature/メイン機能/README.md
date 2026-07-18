@@ -131,6 +131,8 @@ public interface IWorkspaceService
   - `Button` (Select): 展開先フォルダを選択するダイアログを開く。
   - `TextBox` (追加情報入力用): フォルダ名などの追加項目として使用する（下段）。
   - `Button` (Create): 作業フォルダの新規作成を実行する。
+- **UI共通事項**:
+  - 全ての `TextBox` コントロール（検索・パス・ワークスペース名）は、入力テキストが横幅を超過した場合でも複数行（下に伸びる形）で折り返さず、単一行表示（NoWrap）とする。
 
 ## 4. 処理フロー・図解 (Workflow & Diagrams)
 

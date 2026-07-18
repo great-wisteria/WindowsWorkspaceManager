@@ -16,12 +16,12 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="Button_TemplateFolderRemove" Content="Remove" Margin="292,253,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItems, ElementName=DataGrid_RegisteredTemplateFolder}"/>
-        <TextBox x:Name="TextBox_TargetFolderToCreate" HorizontalAlignment="Left" Margin="15,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Text="{Binding TargetFolder, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="TextBox_TargetFolderToCreate" HorizontalAlignment="Left" Margin="15,324,0,0" VerticalAlignment="Top" Width="254" Text="{Binding TargetFolder, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="Button_TemplateFolderCreate" Content="Create" Margin="292,389,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding CreateCommand}"/>
-        <TextBox x:Name="TextBox_WorkspaceName" HorizontalAlignment="Left" Margin="15,355,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Text="{Binding WorkspaceName, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="TextBox_WorkspaceName" HorizontalAlignment="Left" Margin="15,355,0,0" VerticalAlignment="Top" Width="254" Text="{Binding WorkspaceName, UpdateSourceTrigger=PropertyChanged}"/>
         <CheckBox Content="Date (yyyymmdd)" HorizontalAlignment="Left" Margin="15,295,0,0" VerticalAlignment="Top" Width="127" IsChecked="{Binding IsDateChecked}"/>
         <CheckBox Content="Time (hhmmss)" HorizontalAlignment="Left" Margin="147,295,0,0" VerticalAlignment="Top" Width="122" IsChecked="{Binding IsTimeChecked}"/>
-        <TextBox x:Name="TextBox_SearchTemplate" HorizontalAlignment="Left" Margin="65,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="309" Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="TextBox_SearchTemplate" HorizontalAlignment="Left" Margin="65,11,0,0" VerticalAlignment="Top" Width="309" Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="Button_SelectDestinationFolder" Content="Select" Margin="292,323,0,0" VerticalAlignment="Top" Width="82" HorizontalAlignment="Left" Command="{Binding SelectFolderCommand}"/>
         <Label x:Name="Label_Search" Content="Search" HorizontalAlignment="Left" Margin="15,7,0,0" VerticalAlignment="Top"/>
         <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="775,207,0,0" VerticalAlignment="Top"/>
