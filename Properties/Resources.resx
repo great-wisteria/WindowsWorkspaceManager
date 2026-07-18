@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title_Error" xml:space="preserve"><value>エラー</value></data>
+  <data name="Title_Confirm" xml:space="preserve"><value>確認</value></data>
+  <data name="Title_Complete" xml:space="preserve"><value>完了</value></data>
+  <data name="Msg_DuplicateTemplate" xml:space="preserve"><value>同一のテンプレートフォルダ名が登録されています。名前を変更して登録するか登録済みのテンプレートフォルダを削除して再度登録してください</value></data>
+  <data name="Msg_ConfirmRemoveTemplate" xml:space="preserve"><value>登録を解除しますか？</value></data>
+  <data name="Msg_WorkspaceCreated" xml:space="preserve"><value>ワークスペースの作成が完了しました。</value></data>
+  <data name="Msg_Err_InvalidFolder" xml:space="preserve"><value>有効なフォルダが指定されていません</value></data>
+  <data name="Msg_Err_TemplateMissing" xml:space="preserve"><value>登録済みのテンプレートファイルが移動または削除されています</value></data>
+  <data name="Msg_Err_PathTooLong" xml:space="preserve"><value>フォルダーパスが長すぎるため作業フォルダの作成に失敗しました</value></data>
+  <data name="Msg_Err_DestFolderExists" xml:space="preserve"><value>作成先のフォルダがすでに存在しています</value></data>
+  <data name="Msg_Err_NoWritePermission" xml:space="preserve"><value>書き込み権限がありません</value></data>
+  <data name="Msg_Err_NoDiskSpace" xml:space="preserve"><value>ディスクの空き容量が足りません</value></data>
+  <data name="Msg_Err_FileAccess" xml:space="preserve"><value>ファイルアクセスエラー</value></data>
+</root>

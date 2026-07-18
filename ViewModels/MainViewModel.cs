@@ -222,7 +222,7 @@ namespace WindowsWorkspaceManager.ViewModels
 
                 if (_dbService.IsTemplateExists(templateName, zipPath))
                 {
-                    MessageBox.Show("同一のテンプレートフォルダ名が登録されています。名前を変更して登録するか登録済みのテンプレートフォルダを削除して再度登録してください", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Properties.Resources.Msg_DuplicateTemplate, Properties.Resources.Title_Error, MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -262,7 +262,7 @@ namespace WindowsWorkspaceManager.ViewModels
             var selectedItems = parameter as System.Collections.IList;
             if (selectedItems == null || selectedItems.Count == 0) return;
 
-            var result = MessageBox.Show("登録を解除しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show(Properties.Resources.Msg_ConfirmRemoveTemplate, Properties.Resources.Title_Confirm, MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 var templateNames = selectedItems.Cast<TemplateItemViewModel>().Select(x => x.TemplateName).ToList();
@@ -308,7 +308,7 @@ namespace WindowsWorkspaceManager.ViewModels
                 string now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
                 _dbService.UpdateLastCreatedDate(SelectedTemplate.TemplateName, now);
                 
-                MessageBox.Show("ワークスペースの作成が完了しました。", "完了", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Properties.Resources.Msg_WorkspaceCreated, Properties.Resources.Title_Complete, MessageBoxButton.OK, MessageBoxImage.Information);
                 
                 // エクスプローラで作成したフォルダを開く
                 if (Directory.Exists(createdFolderPath))
@@ -320,7 +320,7 @@ namespace WindowsWorkspaceManager.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, Properties.Resources.Title_Error, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
