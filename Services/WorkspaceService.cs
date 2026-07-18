@@ -30,13 +30,13 @@ namespace WindowsWorkspaceManager.Services
             // エラーチェック 1: 有効なフォルダか
             if (string.IsNullOrWhiteSpace(destinationRoot) || !Directory.Exists(destinationRoot))
             {
-                throw new Exception("有効なフォルダが指定されていません");
+                throw new Exception(Properties.Resources.Msg_Err_InvalidFolder);
             }
 
             // エラーチェック 2: ZIPファイルが存在するか
             if (!File.Exists(zipPath))
             {
-                throw new Exception("登録済みのテンプレートファイルが移動または削除されています");
+                throw new Exception(Properties.Resources.Msg_Err_TemplateMissing);
             }
 
             // プレフィックスの作成（yyyymmdd_hhmmss_ の順序）
@@ -51,7 +51,7 @@ namespace WindowsWorkspaceManager.Services
             // パス長オーバーの簡易チェック
             if (finalDestinationPath.Length >= 260)
             {
-                throw new Exception("フォルダーパスが長すぎるため作業フォルダの作成に失敗しました");
+                throw new Exception(Properties.Resources.Msg_Err_PathTooLong);
             }
 
             // 出力先が既に存在する場合のチェック
@@ -60,7 +60,7 @@ namespace WindowsWorkspaceManager.Services
                 if (Directory.EnumerateFileSystemEntries(finalDestinationPath).Any())
                 {
                     // 中身が空でなければエラー
-                    throw new Exception("作成先のフォルダがすでに存在しています");
+                    throw new Exception(Properties.Resources.Msg_Err_DestFolderExists);
                 }
             }
             else
@@ -71,15 +71,15 @@ namespace WindowsWorkspaceManager.Services
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new Exception("書き込み権限がありません");
+                    throw new Exception(Properties.Resources.Msg_Err_NoWritePermission);
                 }
                 catch (IOException ex) when ((ex.HResult & 0x0000FFFF) == 112) // ERROR_DISK_FULL
                 {
-                    throw new Exception("ディスクの空き容量が足りません");
+                    throw new Exception(Properties.Resources.Msg_Err_NoDiskSpace);
                 }
                 catch (Exception)
                 {
-                    throw new Exception("ファイルアクセスエラー");
+                    throw new Exception(Properties.Resources.Msg_Err_FileAccess);
                 }
             }
 
@@ -131,7 +131,7 @@ namespace WindowsWorkspaceManager.Services
             catch (Exception)
             {
                 // 細かいエラーはひとまとめにしてしまう
-                throw new Exception("ファイルアクセスエラー");
+                throw new Exception(Properties.Resources.Msg_Err_FileAccess);
             }
 
             return finalDestinationPath;
