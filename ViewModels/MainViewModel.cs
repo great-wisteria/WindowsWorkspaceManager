@@ -292,10 +292,19 @@ namespace WindowsWorkspaceManager.ViewModels
                     t.TemplateName.Contains(SearchKeyword, StringComparison.OrdinalIgnoreCase));
             }
 
+            // 日付（降順）でソート。nullや空文字は一番下に回す
+            var sorted = filtered.OrderByDescending(t => t.LastCreatedDate ?? string.Empty);
+
             int no = 1;
-            foreach (var item in filtered)
+            foreach (var item in sorted)
             {
                 FilteredTemplates.Add(new TemplateItemViewModel(no++, item));
+            }
+
+            // テンプレートが一つでも存在する場合は、一番上の項目を選択状態にする
+            if (FilteredTemplates.Count > 0)
+            {
+                SelectedTemplate = FilteredTemplates[0];
             }
         }
 
