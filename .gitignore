@@ -1,0 +1,38 @@
+## Ignore Visual Studio Temporary Files, Build Results, and user-specific settings
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstate
+
+# User-specific project files
+*.sqlproj.user
+*.csproj.user
+*.vbproj.user
+*.ndproj.user
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Release]/
+[Re]leasePublic/
+x64/
+x86/
+build/
+bld/
+bin/
+obj/
+
+# Visual Studio cache/options directory
+.vs/
+
+# NuGet Packages
+*.nupkg
+**/packages/
+!**/packages/build/
+
+# OS Metadata
+.DS_Store
+Thumbs.db
