@@ -1,8 +1,12 @@
-# Windows Workspace Manager
+### Windows Workspace Manager
+For Windows 10/11.
 
-Windows Workspace Manager is a Windows utility application that allows you to register and manage your frequently used folder structures and boilerplate files (templates) as ZIP files, enabling you to deploy them as a working folder with a single click whenever needed.
+> **[ Purpose ]**
+> Windows Workspace Manager is a Windows utility application that allows you to register and manage your frequently used folder structures and boilerplate files (templates) as ZIP files, enabling you to deploy them as a working folder with a single click whenever needed.
 
-## 🌟 Key Features
+---
+
+**[ Key Features ]**
 
 1. **Template Registration and Management**
    - Register your frequently used project templates and folder hierarchies as ZIP files into the application.
@@ -15,20 +19,3 @@ Windows Workspace Manager is a Windows utility application that allows you to re
 
 3. **Context Menu (Right-Click) Integration *(Planned/In Development)***
    - By right-clicking a folder in Windows Explorer and selecting "Deploy Workspace Here," you will be able to deploy a template directly into that directory.
-
-## 🎯 Use Cases & Problem Solving
-* "It's tedious to create the same folder structure or copy the same configuration files every time I start a new project."
-* "I want to quickly create a folder with today's date for meeting minutes or daily reports."
-* This application automates such daily routine work and dramatically speeds up your initial startup phase.
-
-## 🛠 Technology Stack
-* **Framework:** .NET 10 (WPF - Windows Presentation Foundation)
-* **Language:** C#
-* **Database:** SQLite (Entity Framework Core / Microsoft.Data.Sqlite)
-* **Installer:** MSIX / Windows Application Packaging Project (Planned)
-
-## 📦 Installation
-*(To be updated once the installer distribution is ready.)*
-
-## 🤝 Development Rules
-Please refer to `[#01_Documents/Project/Gitルール/README.md]` for development rules and Git commit message conventions for this project.
